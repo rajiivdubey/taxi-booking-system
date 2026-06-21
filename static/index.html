@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AirportTaxi Demo - Fixed fare airport transfer</title>
+  <meta name="description" content="Demo airport taxi booking page with fixed fare quote and reservation flow.">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script src="/static/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="AirportTaxi Demo home">
+      <span class="brand-mark">AT</span>
+      <span>
+        <strong>AirportTaxi Demo</strong>
+        <small>Private transfer booking</small>
+      </span>
+    </a>
+    <nav class="top-actions" aria-label="Primary">
+      <a class="call-link" href="tel:+31850653670">+31 85 065 3670</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" aria-label="Airport taxi booking">
+      <div class="hero-inner">
+        <div class="booking-panel" aria-label="Taxi quote and booking form">
+          <div class="panel-heading">
+            <p class="eyebrow">Fixed fare airport transfer</p>
+            <h1>Book your Schiphol taxi</h1>
+          </div>
+
+          <form id="quoteForm" class="quote-form">
+            <div class="segmented-control" role="tablist" aria-label="Trip direction">
+              <button type="button" class="segment is-active" data-direction="to_airport">To airport</button>
+              <button type="button" class="segment" data-direction="from_airport">From airport</button>
+            </div>
+
+            <div class="field-grid">
+              <label class="field">
+                <span>Pickup</span>
+                <select id="pickup" required></select>
+              </label>
+              <label class="field">
+                <span>Drop-off</span>
+                <select id="dropoff" required></select>
+              </label>
+              <label class="field">
+                <span>Date and time</span>
+                <input id="pickupTime" type="datetime-local" required>
+              </label>
+              <label class="field compact-field">
+                <span>Passengers</span>
+                <input id="passengers" type="number" min="1" max="8" value="1" required>
+              </label>
+              <label class="field">
+                <span>Vehicle</span>
+                <select id="vehicleType" disabled>
+                  <option value="standard">Standard taxi</option>
+                  <option value="station_wagon">Station wagon</option>
+                  <option value="van">Van up to 8</option>
+                </select>
+              </label>
+              <label class="field">
+                <span>Flight number</span>
+                <input id="flightNumber" type="text" maxlength="20" placeholder="KL1234">
+              </label>
+            </div>
+
+            <p id="quoteError" class="form-message" role="alert"></p>
+            <button class="primary-button" type="submit">
+              <span>Calculate fixed fare</span>
+            </button>
+          </form>
+
+          <section id="quoteResult" class="quote-result" hidden aria-live="polite">
+            <div>
+              <span class="result-label">Your fixed fare</span>
+              <strong id="quotePrice">EUR 0</strong>
+            </div>
+            <dl>
+              <div>
+                <dt>Distance</dt>
+                <dd id="quoteDistance">0 km</dd>
+              </div>
+              <div>
+                <dt>Ride time</dt>
+                <dd id="quoteDuration">0 min</dd>
+              </div>
+              <div>
+                <dt>Vehicle</dt>
+                <dd id="quoteVehicle">Standard</dd>
+              </div>
+            </dl>
+          </section>
+
+          <form id="bookingForm" class="booking-form" hidden>
+            <div class="field-grid">
+              <label class="field">
+                <span>Full name</span>
+                <input id="fullName" type="text" autocomplete="name" required>
+              </label>
+              <label class="field">
+                <span>Email</span>
+                <input id="email" type="email" autocomplete="email" required>
+              </label>
+              <label class="field">
+                <span>Mobile phone</span>
+                <input id="phone" type="tel" autocomplete="tel" required>
+              </label>
+              <label class="field">
+                <span>Notes</span>
+                <input id="notes" type="text" maxlength="500" placeholder="Extra luggage, child seat">
+              </label>
+            </div>
+
+            <label class="terms-row">
+              <input id="acceptsTerms" type="checkbox" required>
+              <span>I accept the booking terms and privacy policy.</span>
+            </label>
+
+            <p id="bookingError" class="form-message" role="alert"></p>
+            <button class="primary-button secondary-tone" type="submit">
+              <span>Confirm booking</span>
+            </button>
+          </form>
+
+          <section id="bookingSuccess" class="booking-success" hidden aria-live="polite">
+            <span class="success-kicker">Booking created</span>
+            <h2 id="rideNumber">TX-00000000-00000</h2>
+            <p id="bookingStatus">Payment pending</p>
+            <a id="paymentLink" href="#" target="_blank" rel="noreferrer">Open secure payment</a>
+          </section>
+        </div>
+
+        <aside class="hero-copy" aria-label="Service summary">
+          <p class="rating-line">Rated 4.7 from 3,000+ trips</p>
+          <h2>Door-to-door airport rides with clear pricing.</h2>
+          <div class="service-strip" aria-label="Service facts">
+            <span>24/7 dispatch</span>
+            <span>Online payment</span>
+            <span>Flight-aware pickup</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="route-band" aria-label="Popular route prices">
+      <div class="section-inner">
+        <div class="section-title">
+          <p class="eyebrow">Popular routes</p>
+          <h2>Sample fixed fares for the demo</h2>
+        </div>
+        <div class="route-grid">
+          <article class="route-card">
+            <span>Amsterdam</span>
+            <strong>from EUR 35</strong>
+          </article>
+          <article class="route-card">
+            <span>Utrecht</span>
+            <strong>from EUR 60</strong>
+          </article>
+          <article class="route-card">
+            <span>The Hague</span>
+            <strong>from EUR 70</strong>
+          </article>
+          <article class="route-card">
+            <span>Rotterdam</span>
+            <strong>from EUR 80</strong>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="operations-band" aria-label="Backend modules">
+      <div class="section-inner operations-grid">
+        <div>
+          <p class="eyebrow">Backend demo</p>
+          <h2>Quote, booking, payment handoff, and cancellation.</h2>
+        </div>
+        <ul class="module-list">
+          <li>Quote API</li>
+          <li>Booking API</li>
+          <li>Customer details</li>
+          <li>Payment placeholder</li>
+          <li>Cancel endpoint</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
