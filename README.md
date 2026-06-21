@@ -143,7 +143,3 @@ Access the application at `http://localhost:8000`.
 
 ## Contributing
 Contributions are welcome! Please feel free to open issues or submit pull requests.
-
-## License
-This project is licensed under the MIT License.
->>>>>>> Stashed changes
